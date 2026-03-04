@@ -14,10 +14,7 @@ function addBooktoLibrary(title, author, pages, readOrNot) {
 }
 
 function displayBooks(library) {
-    let index = -1;
     library.forEach(book => {
-        index+= 1;
-
         let id = book.id;
         let title = book.title;
         let author = book.author;
@@ -25,6 +22,7 @@ function displayBooks(library) {
         let readOrNot = book.readOrNot;
 
         const displayId = document.createElement("p");
+        displayId.id = "bookId"
         const displayTitle = document.createElement("p");
         const displayAuthor = document.createElement("p");
         const displayPages = document.createElement("p");
@@ -53,10 +51,35 @@ function displayBooks(library) {
         bookCard.appendChild(displayPages)
         bookCard.appendChild(displayReadOrNot)
         bookCard.appendChild(removeBtn)
+        bookCard.dataset.id = id;
 
         const displayBox = document.querySelector(".container .displayBox")
         displayBox.appendChild(bookCard)  
     })
+
+        /* make events to remove a particular book from the myLibrary array */
+        
+        const allRemoveBtns = document.querySelectorAll(".displayBox .removeBtn")
+        allRemoveBtns.forEach(button => {
+        button.addEventListener("click", e => {
+
+            /*get the closest parent div */
+            const clickedBookCard = e.target.closest("div") /*or I can just retrieve the data named id. like: const idToDelete = clickedBookCard.dataset.id
+            /* get the id from the parent div */
+            const clickedBookId = clickedBookCard.querySelector("#bookId")
+            const idToDelete = clickedBookId.textContent
+            
+            /* find the index of the book object that has the same id*/
+            const deleteIndex = myLibrary.findIndex(item => item.id === idToDelete)
+
+            /* remove the whole object from using that index from the main array */
+            myLibrary.splice(deleteIndex, 1)
+
+            /* redisplay new updated main array: myLibrary */
+            Display.replaceChildren();
+            displayBooks(myLibrary)
+        })
+})
 }
 
 addBooktoLibrary("RI ", "Gu Zhen Ren ", 1000, true)
@@ -66,17 +89,19 @@ addBooktoLibrary("Naruto", "Miyamoto", 800, true)
 
 /* DOM */
 const body = document.querySelector("body")
-
-/* get all the children from the displayBox */
 const Display = document.querySelector(".displayBox")
 
+
+/* Make event for displaying Books */
 const displayBooksButton = document.querySelector(".container>.displayBooks")
 displayBooksButton.addEventListener("click", e => {
 
-    /* remove all children from the displayBox */
+    /* clear all children from the displayBox */
     Display.replaceChildren();
     displayBooks(myLibrary)
 })
+
+    
 
 const btnnewBook = document.querySelector(".newBook")
 btnnewBook.addEventListener("click", () => {
@@ -159,6 +184,7 @@ btnnewBook.addEventListener("click", () => {
     
     myForm.addEventListener("submit", e => {
         e.preventDefault();
+
         const bookObject = {}
 
         const formData = new FormData(myForm)
@@ -176,7 +202,6 @@ btnnewBook.addEventListener("click", () => {
          
         Display.replaceChildren()
         displayBooks(myLibrary)
-
     })
 
     dialogBox.appendChild(myForm)
