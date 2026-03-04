@@ -4,6 +4,7 @@ body {
 }
 .container {
     height: 100%;
+    min-height: fit-content;
     border: 2px solid pink;
     border-radius: 6px;
     padding: 1.5rem clamp(1.5rem, 10%, 12%);
@@ -27,6 +28,5 @@ body {
     display: grid;
     padding: 1rem;
     gap: 1rem;
-    grid-auto-rows: 150px;
-    grid-template: repeat(autofit, minmax(120px, 1fr))
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
 }

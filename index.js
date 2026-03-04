@@ -1,6 +1,6 @@
 const myLibrary = [];
 
-function Book (title, author, pages, readOrNot) {
+function Book(title, author, pages, readOrNot) {
     this.id = crypto.randomUUID();
     this.title = title;
     this.author = author;
@@ -13,14 +13,14 @@ function addBooktoLibrary(title, author, pages, readOrNot) {
     myLibrary.push(book)
 }
 
-function displayBooks (library) {
-    library.forEach(book=> {
+function displayBooks(library) {
+    library.forEach(book => {
         let id = book.id;
         let title = book.title;
         let author = book.author;
         let pages = book.pages;
         let readOrNot = book.readOrNot;
-        
+
         const displayId = document.createElement("p");
         const displayTitle = document.createElement("p");
         const displayAuthor = document.createElement("p");
@@ -32,7 +32,7 @@ function displayBooks (library) {
         displayAuthor.textContent = author;
         displayPages.textContent = pages;
 
-        if (readOrNot===true) {
+        if (readOrNot === true) {
             displayReadOrNot.textContent = "Read";
         } else {
             displayReadOrNot.textContent = "Unread";
@@ -58,20 +58,27 @@ addBooktoLibrary("Naruto", "Miyamoto", 800, true)
 /* DOM */
 const body = document.querySelector("body")
 
+/* get all the children from the displayBox */
+
+
 const displayBooksButton = document.querySelector(".container>.displayBooks")
 displayBooksButton.addEventListener("click", e => {
+
+    /* remove all children from the displayBox */
+    const Display = document.querySelector(".displayBox")
+    Display.replaceChildren();
     displayBooks(myLibrary)
 })
 
 const btnnewBook = document.querySelector(".newBook")
-btnnewBook.addEventListener("click", ()=> {
+btnnewBook.addEventListener("click", () => {
     const dialogBox = document.createElement("dialog")
 
     const myForm = document.createElement("form")
     const title = document.createElement("h3")
     title.textContent = "Add a Book"
     myForm.appendChild(title)
-    
+
     /* Make labels and input for different book properties */
 
     /* Title */
@@ -102,7 +109,7 @@ btnnewBook.addEventListener("click", ()=> {
     authorDiv.appendChild(authorLabel)
     authorDiv.appendChild(authorInput)
 
-     /* Pages */
+    /* Pages */
     const pagesLabel = document.createElement("label")
     pagesLabel.htmlFor = "pages"
     pagesLabel.textContent = "Pages: "
@@ -142,7 +149,7 @@ btnnewBook.addEventListener("click", ()=> {
     myForm.appendChild(readDiv)
     myForm.appendChild(submitBtn)
 
-    myForm.addEventListener("submit",e=> {
+    myForm.addEventListener("submit", e => {
         e.preventDefault();
         const bookObject = {}
 
@@ -150,15 +157,15 @@ btnnewBook.addEventListener("click", ()=> {
         for (const pair of formData) {
             bookObject[pair[0]] = pair[1]
         }
-        if (formData.has("readOrNot")===false){
-            bookObject.readOrNot=false
+        if (formData.has("readOrNot") === false) {
+            bookObject.readOrNot = false
         } else {
-            bookObject.readOrNot=true
+            bookObject.readOrNot = true
         }
-        
+
         addBooktoLibrary(bookObject.title, bookObject.author, bookObject.pages, bookObject.readOrNot)
         dialogBox.close();
-    } )
+    })
 
     dialogBox.appendChild(myForm)
     body.appendChild(dialogBox)
