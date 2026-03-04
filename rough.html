@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FormData Example</title>
+</head>
+<body>
+
+<form id="myForm">
+  <input type="text" name="name" placeholder="Name" />
+  <input type="text" name="address" placeholder="Address" />
+  <input type="number" name="number" placeholder="Number" />
+  <button type="submit">Submit</button>
+</form>
+
+<script>
+  const form = document.getElementById("myForm");
+
+  form.addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    const formData = new FormData(form);
+            for (const pair of formData) {
+            let key = pair[0]
+            let value = pair[1]
+            console.log(key + value)
+
+            
+        }
+  });
+</script>
+
+</body>
+</html>
