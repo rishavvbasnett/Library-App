@@ -14,7 +14,10 @@ function addBooktoLibrary(title, author, pages, readOrNot) {
 }
 
 function displayBooks(library) {
+    let index = -1;
     library.forEach(book => {
+        index+= 1;
+
         let id = book.id;
         let title = book.title;
         let author = book.author;
@@ -38,15 +41,21 @@ function displayBooks(library) {
             displayReadOrNot.textContent = "Unread";
         }
 
+        /* the remove button */
+        const removeBtn = document.createElement("button");
+        removeBtn.textContent = "Remove"
+        removeBtn.classList.add("removeBtn")
+
         const bookCard = document.createElement("div")
         bookCard.appendChild(displayTitle)
         bookCard.appendChild(displayId)
         bookCard.appendChild(displayAuthor)
         bookCard.appendChild(displayPages)
         bookCard.appendChild(displayReadOrNot)
+        bookCard.appendChild(removeBtn)
 
         const displayBox = document.querySelector(".container .displayBox")
-        displayBox.appendChild(bookCard)
+        displayBox.appendChild(bookCard)  
     })
 }
 
@@ -59,13 +68,12 @@ addBooktoLibrary("Naruto", "Miyamoto", 800, true)
 const body = document.querySelector("body")
 
 /* get all the children from the displayBox */
-
+const Display = document.querySelector(".displayBox")
 
 const displayBooksButton = document.querySelector(".container>.displayBooks")
 displayBooksButton.addEventListener("click", e => {
 
     /* remove all children from the displayBox */
-    const Display = document.querySelector(".displayBox")
     Display.replaceChildren();
     displayBooks(myLibrary)
 })
@@ -148,7 +156,7 @@ btnnewBook.addEventListener("click", () => {
     myForm.appendChild(pagesDiv)
     myForm.appendChild(readDiv)
     myForm.appendChild(submitBtn)
-
+    
     myForm.addEventListener("submit", e => {
         e.preventDefault();
         const bookObject = {}
@@ -165,6 +173,10 @@ btnnewBook.addEventListener("click", () => {
 
         addBooktoLibrary(bookObject.title, bookObject.author, bookObject.pages, bookObject.readOrNot)
         dialogBox.close();
+         
+        Display.replaceChildren()
+        displayBooks(myLibrary)
+
     })
 
     dialogBox.appendChild(myForm)
