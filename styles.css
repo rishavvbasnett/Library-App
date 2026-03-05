@@ -1,7 +1,18 @@
 body {
-    padding: 1.5rem clamp(1rem, 10vw, 12rem);
+    padding: 1.5rem clamp(1rem, 12vw, 20vw);
     height: 100vh;
 }
+
+.heading {
+    font-size: x-large;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+
 .container {
     height: 100%;
     min-height: fit-content;
@@ -34,7 +45,12 @@ body {
 .displayBox>div {
     border: 1px solid black;
     border-radius: 6px;
-    padding: 1rem;
+    padding: 0.8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.3rem;
 }
 
 .displayBox>div>p {
@@ -43,9 +59,20 @@ body {
 
 .displayBox>div :first-child {
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
-.displayBox>div button {
-    margin: 5px 12px;
+.displayBox>div :nth-child(3) {
+    font-weight: 500;
 }
+.displayBox>div button {
+    font-weight: 500;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.9rem;
+    width: 70px;
+    height: fit-content;
+    margin-top: 5px;
+}
+

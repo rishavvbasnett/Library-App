@@ -41,10 +41,10 @@ function displayBooks(library) {
             btnReadOrNot.style.color = "red"
         }
 
-        displayId.textContent = id;
+        displayId.textContent = "Id:  " + id;
         displayTitle.textContent = title;
-        displayAuthor.textContent = author;
-        displayPages.textContent = pages;
+        displayAuthor.textContent = "by " + author;
+        displayPages.textContent = "Pages: " + pages;
     
 
         /* the remove button */
@@ -82,8 +82,6 @@ function displayBooks(library) {
             })
         })
 
-
-
         /* make events to remove a particular book from the myLibrary array */
         const allRemoveBtns = document.querySelectorAll(".displayBox .removeBtn")
         allRemoveBtns.forEach(button => {
@@ -111,6 +109,7 @@ function displayBooks(library) {
 addBooktoLibrary("RI ", "Gu Zhen Ren ", 1000, true)
 addBooktoLibrary("One Piece", "Echiro Oda", 800, false)
 addBooktoLibrary("Naruto", "Miyamoto", 800, true)
+addBooktoLibrary("Bhagavad Geeta", "Great Sage Vyasa", 999, true)
 
 
 /* DOM */
@@ -127,8 +126,7 @@ displayBooksButton.addEventListener("click", e => {
     displayBooks(myLibrary)
 })
 
-    
-
+/* Logic for New Book button, USING a Dialog box and adding a form there */
 const btnnewBook = document.querySelector(".newBook")
 btnnewBook.addEventListener("click", () => {
     const dialogBox = document.createElement("dialog")
