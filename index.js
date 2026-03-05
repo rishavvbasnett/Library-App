@@ -8,6 +8,10 @@ function Book(title, author, pages, readOrNot) {
     this.readOrNot = readOrNot;
 }
 
+Book.prototype.readUnread = function () {
+   this.readOrNot = !this.readOrNot
+}
+
 function addBooktoLibrary(title, author, pages, readOrNot) {
     let book = new Book(title, author, pages, readOrNot)
     myLibrary.push(book)
@@ -26,18 +30,22 @@ function displayBooks(library) {
         const displayTitle = document.createElement("p");
         const displayAuthor = document.createElement("p");
         const displayPages = document.createElement("p");
-        const displayReadOrNot = document.createElement("p");
+
+        const btnReadOrNot = document.createElement("button")
+        btnReadOrNot.classList.add("toggleReadBtn")
+        if (readOrNot===true) {
+            btnReadOrNot.textContent = "Read"
+            btnReadOrNot.style.color = "green"
+        } else {
+            btnReadOrNot.textContent = "Unread"
+            btnReadOrNot.style.color = "red"
+        }
 
         displayId.textContent = id;
         displayTitle.textContent = title;
         displayAuthor.textContent = author;
         displayPages.textContent = pages;
-
-        if (readOrNot === true) {
-            displayReadOrNot.textContent = "Read";
-        } else {
-            displayReadOrNot.textContent = "Unread";
-        }
+    
 
         /* the remove button */
         const removeBtn = document.createElement("button");
@@ -49,7 +57,7 @@ function displayBooks(library) {
         bookCard.appendChild(displayId)
         bookCard.appendChild(displayAuthor)
         bookCard.appendChild(displayPages)
-        bookCard.appendChild(displayReadOrNot)
+        bookCard.appendChild(btnReadOrNot)
         bookCard.appendChild(removeBtn)
         bookCard.dataset.id = id;
 
@@ -57,8 +65,26 @@ function displayBooks(library) {
         displayBox.appendChild(bookCard)  
     })
 
+        /* add event to toggle Read/Unread Status */
+        const allToggleReadBtn = document.querySelectorAll(".displayBox .toggleReadBtn")
+
+        allToggleReadBtn.forEach(button => {
+            button.addEventListener("click", e=> {
+            const Book_Card = e.target.closest("div")
+            const Book_id = Book_Card.dataset.id
+            
+            toggleIndex = myLibrary.findIndex(book => book.id === Book_id)
+            myLibrary[toggleIndex].readUnread()
+            myLibrary[toggleIndex] = myLibrary[toggleIndex]
+
+            Display.replaceChildren();
+            displayBooks(myLibrary)
+            })
+        })
+
+
+
         /* make events to remove a particular book from the myLibrary array */
-        
         const allRemoveBtns = document.querySelectorAll(".displayBox .removeBtn")
         allRemoveBtns.forEach(button => {
         button.addEventListener("click", e => {
@@ -79,7 +105,7 @@ function displayBooks(library) {
             Display.replaceChildren();
             displayBooks(myLibrary)
         })
-})
+    })
 }
 
 addBooktoLibrary("RI ", "Gu Zhen Ren ", 1000, true)
@@ -208,5 +234,3 @@ btnnewBook.addEventListener("click", () => {
     body.appendChild(dialogBox)
     dialogBox.showModal();
 })
-
-

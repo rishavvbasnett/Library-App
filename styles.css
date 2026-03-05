@@ -26,7 +26,26 @@ body {
     height: 77%;
     width: 100%;
     display: grid;
-    padding: 1rem;
-    gap: 1rem;
+    padding: 2.1rem;
+    gap: 1.7rem;
     grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+}
+
+.displayBox>div {
+    border: 1px solid black;
+    border-radius: 6px;
+    padding: 1rem;
+}
+
+.displayBox>div>p {
+    text-align: center;
+}
+
+.displayBox>div :first-child {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+
+.displayBox>div button {
+    margin: 5px 12px;
 }
